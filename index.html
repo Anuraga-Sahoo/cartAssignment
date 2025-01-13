@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <!-- REPLACE THIS WITH YOUR PROJECT NAME. EXAMPLE - Category tabs -->
+     <!-- font awesome icons links -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+     
+    <title>Coding Assesment L2 boilerplate</title>
+
+</head>
+
+<body>
+    <!-- Your code goes here -->
+
+    <!-- Navbar section Start here-->
+     <nav>
+        <div class="nav-content">
+            <div class="left-content">
+                <img src="logo.png" alt="logo" class="logo">
+                <h2 class="logo-text">Marmeto</h2>
+            </div>
+            <div class="middle-content">
+                <ul class="nav-links">
+                    <li class="home">Home</li>
+                    <li class="shop">Shop</li>
+                    <li class="about">About</li>
+                    <li class="contact">Contact</li>
+                </ul>
+            </div>
+            <div class="right-content">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-solid fa-cart-shopping"></i>
+                
+                
+            </div>
+        </div>
+     </nav>
+     <!-- Navbar section end here -->
+    
+     <!-- Banner section starts here -->
+      <div class="img-container">
+        <div class="logo-text-contener">
+            <!-- <img src="logo.png" alt="logo" class="cartlogo"> 
+             -->
+            <div class="cartlogo"></div>
+            <h2 class="cart">Cart</h2>
+        </div>
+        <div class="home-cart">
+            <a href="index.html" class="home-link">Home </a>
+            <i class="fa-solid fa-angle-right angle"></i>
+            <a href="#" class="cart-link"> Cart</a>
+        </div>
+      </div>
+     <!-- Banner section ends here -->
+
+     <!-- Cart Total section starts here -->
+      <div class="cart-container">
+        <div class="cart-card">
+            <div class="product-container">
+                <table>
+                   <tr class="table-head">
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th> </th>
+                   </tr>
+
+                   <!-- product details fetch dynamically -->
+                   <!-- <tr>
+                    <td class="product-img-title">
+                        <img src="" alt="" class="product-img">
+                        <p class="title"></p>
+                    </td>
+
+                    <td class="price"></td>
+                    <td class="quantity">
+                        <input type="text"name="quantity" class="quantity-container">
+                    </td>
+                    <td class="subtotal">
+                        
+                    </td>
+
+                    <td class="delete-icon">
+                        <i class="fa-solid fa-trash" style="color: #FFD43B;"></i>
+                    </td>
+
+                   </tr> -->
+                   <!-- / -->
+
+                </table>
+            </div>
+
+            <!-- Cart Totals container starts here-->
+            <div class="cart-total-container">
+                <div class="cart-total-heading">
+                    <h2 class="heading">Cart Totals</h2>
+                </div>
+                <div class="subtotal-container">
+                    <p class="subtotal">Subtotal</p>
+                    <p class="subtotal-price-card">Rs. 250,000.00</p>
+                </div>
+                <div class="total-container">
+                    <p class="total">Total</p>
+                    <p class="total-price-card">54</p>
+                </div>
+                <button class="checkout-btn">Check Out</button>
+
+            </div>
+            <!-- Cart Totals container ends here -->
+
+        </div>
+      </div>
+     <!-- Cart Total section ends here -->
+
+
+     <!-- Footer section starts here -->
+      <footer>
+       <div class="footer-container">
+        <div class="footer-icon-text">
+            <i class="fa-solid fa-trophy footer-icon"></i>
+            <div class="footer-text-container">
+                <h2 class="footer-main-text">High Quality</h2>
+                <p class="footer-description">crafted from top materials</p>
+            </div>
+        </div>
+        <div class="footer-icon-text">
+            <i class="fa-solid fa-check footer-icon"></i>
+            <div class="footer-text-container">
+                <h2 class="footer-main-text">Warranty Protection</h2>
+                <p class="footer-description">Over 2 years</p>
+            </div>
+        </div>
+        <div class="footer-icon-text">
+            <i class="fa-solid fa-truck-fast footer-icon"></i>
+            <div class="footer-text-container">
+                <h2 class="footer-main-text">Free Shipping</h2>
+                <p class="footer-description">Order over 150 $</p>
+            </div>
+        </div>
+        <div class="footer-icon-text">
+            <i class="fa-solid fa-headphones footer-icon"></i>
+            <div class="footer-text-container">
+                <h2 class="footer-main-text">24 / 7 Support</h2>
+                <p class="footer-description">Dedicated support</p>
+            </div>
+        </div>
+        
+       </div>
+      </footer>
+     <!-- Footer section ends here -->
+
+
+    <!-- Happy coding 😊 -->
+    <script src="./script.js"></script>
+</body>
+
+</html>
