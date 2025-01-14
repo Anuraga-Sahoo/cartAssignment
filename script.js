@@ -1,139 +1,136 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cartContainer = document.querySelector(".product-container table");
-  const subtotalElement = document.querySelector(".subtotal-price-card");
-  const totalElement = document.querySelector(".total-price-card");
-  const checkoutButton = document.querySelector(".checkout-btn");
+  const cartTable = document.querySelector(".product-container table");
+  const subtotalDisplay = document.querySelector(".subtotal-price-card");
+  const totalDisplay = document.querySelector(".total-price-card");
+  const checkoutBtn = document.querySelector(".checkout-btn");
 
-  // add loder
-  const loader = document.createElement("div");
-    loader.classList.add("loader");
-    document.body.appendChild(loader);
-    loader.style.display = "block";
-
+  // Add loader
+  const displayLoader = document.createElement("div");
+  displayLoader.classList.add("loader");
+  document.body.appendChild(displayLoader);
+  displayLoader.style.display = "block";
 
   // Fetch cart data from the API
-  fetch("https://cdn.shopify.com/s/files/1/0883/2188/4479/files/apiCartData.json?v=1728384889") 
-      .then(response => response.json())
-      .then(data => {
-          const items = data.items;
-          // hide loder
-          loader.style.display = "none";
-          let total = 0;
-          let newSubtotal;
+  fetch("https://cdn.shopify.com/s/files/1/0883/2188/4479/files/apiCartData.json?v=1728384889")
+    .then(response => response.json())
+    .then(cartData => {
+      const cartItems = cartData.items;
 
-          items.forEach(item => {
-            //creating a row
-              const itemRow = document.createElement("tr");
+      // Hide loader
+      displayLoader.style.display = "none";
 
-              // creating product image and title
-              const productCell = document.createElement("td");
-              productCell.classList.add("product-img-title");
-              const productImage = document.createElement("img");
-              productImage.src = item.image;
-              productImage.alt = item.title;
-              productImage.classList.add("product-img");
-              const productTitle = document.createElement("p");
-              productTitle.classList.add("title");
-              productTitle.textContent = item.title;
-              productCell.appendChild(productImage);
-              productCell.appendChild(productTitle);
+      let totalPrice = 0;
 
-              // Price
-              const priceCell = document.createElement("td");
-              priceCell.classList.add("price");
-              priceCell.textContent = `₹ ${item.presentment_price.toLocaleString()}`;
+      cartItems.forEach(cartItem => {
+        // Create a row for each product
+        const productRow = document.createElement("tr");
 
-              // Quantity
-              const quantityCell = document.createElement("td");
-              quantityCell.classList.add("quantity");
-              const quantityInput = document.createElement("input");
-              quantityInput.type = "number";
-              quantityInput.value = item.quantity;
-              quantityInput.min = item.quantity_rule.min;
-              quantityInput.classList.add("quantity-container");
-              quantityCell.appendChild(quantityInput);
+        // Create a cell for product image and title
+        const productInfoCell = document.createElement("td");
+        productInfoCell.classList.add("product-img-title");
+        const productImg = document.createElement("img");
+        productImg.src = cartItem.image;
+        productImg.alt = cartItem.title;
+        productImg.classList.add("product-img");
+        const productTitle = document.createElement("p");
+        productTitle.classList.add("title");
+        productTitle.textContent = cartItem.title;
+        productInfoCell.appendChild(productImg);
+        productInfoCell.appendChild(productTitle);
 
-              // Subtotal
-              const subtotalCell = document.createElement("td");
-              subtotalCell.classList.add("subtotal");
-              const subtotal = item.presentment_price * item.quantity;
-              subtotalCell.textContent = `₹ ${subtotal.toLocaleString()}`;
-              subtotalElement.innerHTML = `₹ ${subtotal.toLocaleString()}`;
+        // Price cell
+        const priceCell = document.createElement("td");
+        priceCell.classList.add("price");
+        priceCell.textContent = `₹ ${cartItem.presentment_price.toLocaleString()}`;
 
-              // Delete Icon
-              const deleteCell = document.createElement("td");
-              deleteCell.classList.add("delete-icon");
-              const deleteIcon = document.createElement("i");
-              deleteIcon.classList.add("fa-solid", "fa-trash");
-              deleteIcon.style.color = "#FFD43B";
-              deleteCell.appendChild(deleteIcon);
+        // Quantity cell
+        const quantityCell = document.createElement("td");
+        quantityCell.classList.add("quantity");
+        const quantityInput = document.createElement("input");
+        quantityInput.type = "number";
+        quantityInput.value = cartItem.quantity;
+        quantityInput.min = cartItem.quantity_rule.min;
+        quantityInput.classList.add("quantity-container");
+        quantityCell.appendChild(quantityInput);
 
-              // Append all cells to the row
-              itemRow.appendChild(productCell);
-              itemRow.appendChild(priceCell);
-              itemRow.appendChild(quantityCell);
-              itemRow.appendChild(subtotalCell);
-              itemRow.appendChild(deleteCell);
+        // Subtotal cell
+        const subtotalCell = document.createElement("td");
+        subtotalCell.classList.add("subtotal");
+        const itemSubtotal = cartItem.presentment_price * cartItem.quantity;
+        subtotalCell.textContent = `₹ ${itemSubtotal.toLocaleString()}`;
+        subtotalDisplay.innerHTML = `₹ ${itemSubtotal.toLocaleString()}`;
 
-              // Append the row to the table
-              cartContainer.appendChild(itemRow);
+        // Delete icon cell
+        const deleteCell = document.createElement("td");
+        deleteCell.classList.add("delete-icon");
+        const deleteIcon = document.createElement("i");
+        deleteIcon.classList.add("fa-solid", "fa-trash");
+        deleteIcon.style.color = "#FFD43B";
+        deleteCell.appendChild(deleteIcon);
 
-              // Update total
-              total += subtotal;
-              totalElement.textContent = `₹ ${total.toLocaleString()}`;
+        // Append all cells to the row
+        productRow.appendChild(productInfoCell);
+        productRow.appendChild(priceCell);
+        productRow.appendChild(quantityCell);
+        productRow.appendChild(subtotalCell);
+        productRow.appendChild(deleteCell);
 
-              // Event listener for quantity change
-              quantityInput.addEventListener("change", (e) => {
-                  const newQuantity = parseInt(e.target.value);
-                   newSubtotal = item.presentment_price * newQuantity;
-                  subtotalCell.textContent = `₹ ${newSubtotal.toLocaleString()}`;
-                  subtotalElement.textContent = `₹ ${newSubtotal.toLocaleString()}`;
-                  total =  newSubtotal;
-                  totalElement.textContent = `₹ ${total.toLocaleString()}`;
-                  
-              });
+        // Append the row to the table
+        cartTable.appendChild(productRow);
 
-              // Event listener for delete icon
-              deleteIcon.addEventListener("click", () => {
-                showModal(() => {
-                  itemRow.remove();
-                  // updateTotal();
-                  saveCart();
-                })
-                 
-                  
-              });
-              function showModal(confirmCallback) {
-                const modal = document.createElement("div");
-                modal.classList.add("modal");
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <p>Are you sure you want to remove this item?</p>
-                        <button class="confirm-btn">Yes</button>
-                        <button class="cancel-btn">No</button>
-                    </div>
-                `;
-                document.body.appendChild(modal);
-        
-                modal.querySelector(".confirm-btn").addEventListener("click", () => {
-                  modal.remove();
-                  subtotalElement.textContent = `${total-newSubtotal}`
-                  totalElement.textContent = `${total-newSubtotal}`
-                  confirmCallback();
-                });
-        
-                modal.querySelector(".cancel-btn").addEventListener("click", () => {
-                    modal.remove();
-                });
-            }
+        // Update total price
+        totalPrice += itemSubtotal;
+        totalDisplay.textContent = `₹ ${totalPrice.toLocaleString()}`;
+
+        // Event listener for quantity change
+        quantityInput.addEventListener("change", (e) => {
+          const updatedQuantity = parseInt(e.target.value);
+          const newItemSubtotal = cartItem.presentment_price * updatedQuantity;
+          subtotalCell.textContent = `₹ ${newItemSubtotal.toLocaleString()}`;
+          subtotalDisplay.textContent = `₹ ${newItemSubtotal.toLocaleString()}`;
+          totalPrice = newItemSubtotal;
+          totalDisplay.textContent = `₹ ${totalPrice.toLocaleString()}`;
+        });
+
+        // Event listener for delete icon
+        deleteIcon.addEventListener("click", () => {
+          showConfirmationModal(() => {
+            productRow.remove();
+            subtotalDisplay.textContent = `${totalPrice - itemSubtotal}`;
+            totalDisplay.textContent = `${totalPrice - itemSubtotal}`;
+          });
+        });
+
+        function showConfirmationModal(confirmCallback) {
+          const modal = document.createElement("div");
+          modal.classList.add("modal");
+          modal.innerHTML = `
+              <div class="modal-content">
+                  <p>Are you sure you want to remove this item?</p>
+                  <button class="confirm-btn">Yes</button>
+                  <button class="cancel-btn">No</button>
+              </div>
+          `;
+          document.body.appendChild(modal);
+
+          modal.querySelector(".confirm-btn").addEventListener("click", () => {
+            modal.remove();
+            confirmCallback();
           });
 
-          // Checkout button functionality
-          checkoutButton.addEventListener("click", () => {
-              alert("Proceeding to checkout!");
+          modal.querySelector(".cancel-btn").addEventListener("click", () => {
+            modal.remove();
           });
-      })
-      .catch(error => {console.error("Error fetching cart data:", error)
-         loader.style.display = "block"; 
+        }
       });
+
+      // Checkout button functionality
+      checkoutBtn.addEventListener("click", () => {
+        alert("Proceeding to checkout!");
+      });
+    })
+    .catch(error => {
+      console.error("Error fetching cart data:", error);
+      displayLoader.style.display = "block";
+    });
 });
